@@ -1,0 +1,26 @@
+{
+  "name": "camli23",
+  "version": "1.0.0",
+  "description": "Node app that takes in repos and outputs contributor info for that repo",
+  "main": "index.js",
+  "dependencies": {
+    "request": "^2.81.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CamLi23/project1-LHL.git"
+  },
+  "keywords": [
+    "avatar"
+  ],
+  "author": "Cameron Cutler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CamLi23/project1-LHL/issues"
+  },
+  "homepage": "https://github.com/CamLi23/project1-LHL#readme"
+}
