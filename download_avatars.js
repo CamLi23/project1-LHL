@@ -23,12 +23,15 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
     try {
       const data = JSON.parse(body);
+      const final = [];
 
-      data.forEach((contributor) => {
-        console.log(contributor.login);
-      });
+      cb(data.forEach((contributor) => {
+        final.push(contributor.avatar_url);
+      }));
+      console.log(final);
+      return final;
 
-      cb(data);
+
     } catch (err) {
       console.log('Failed to parse content body');
     }
