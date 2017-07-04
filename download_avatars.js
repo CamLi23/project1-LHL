@@ -4,7 +4,7 @@ const avatarDir = './avatars';
 
 
 console.log('Welcome to the gitHub Avatar Downloader!');
-
+// Sets the options for the request function
 function getRequestOptions(path) {
   return {
     url: 'https://api.github.com/' + path,
@@ -17,7 +17,7 @@ function getRequestOptions(path) {
   };
 }
 
-
+// Grabs the contributors from a given repo and executes a callback function
 function getRepoContributors(repoOwner, repoName, cb) {
   if (!repoOwner || !repoName) {
     throw new Error("Please execute this file in form of download_avatar.js <Repository Owner> <Repository Name>");
@@ -35,13 +35,11 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
       cb(data);
 
-
   });
 }
 
 
-
-
+// Downloads a image and saves it to a new file  in a local folder
 function downloadImageByURL(url, filePath) {
   request.get(url)
          .on('error', function (err) {
@@ -55,11 +53,11 @@ function downloadImageByURL(url, filePath) {
 }
 
 
-
-
+// The process functions pull out the arguments from the command line and passes it into the getRepoContributors function
+// Calls the downloadImageByURL and makes a new file (named after the Github login), saved to my local "./avatars folder"
 getRepoContributors(process.argv[2], process.argv[3], function (data) {
   data.forEach((contributor) => {
     downloadImageByURL(contributor.avatar_url, `avatars/${contributor.login}.jpg`);
   })
 });
-// downloadImageByURL("https://avatars2.githubusercontent.com/u/43004?v=3", "avatars/githubUserAv.jpg");
+
