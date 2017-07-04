@@ -19,6 +19,7 @@ function getRequestOptions(path) {
 
 
 function getRepoContributors(repoOwner, repoName, cb) {
+
   request(getRequestOptions(`repos/${repoOwner}/${repoName}/contributors`), function (error, response, body) {
     var data;
 
@@ -36,10 +37,6 @@ function getRepoContributors(repoOwner, repoName, cb) {
 }
 
 
-/*data.forEach((contributor) => {
-        final.push(contributor.avatar_url);
-      })*/
-
 
 
 function downloadImageByURL(url, filePath) {
@@ -55,17 +52,9 @@ function downloadImageByURL(url, filePath) {
 }
 
 
-/*request.get(`https://api.github.com/repos/${repoOwner}/${repoName}/contributors`)
-         .on('error', function( err) {
-          throw err;
-         })
-         .on('response', function (res) {
-
-         });*/
 
 
-
-getRepoContributors("jquery", "jquery", function (data) {
+getRepoContributors(process.argv[2], process.argv[3], function (data) {
   data.forEach((contributor) => {
     downloadImageByURL(contributor.avatar_url, `avatars/${contributor.login}.jpg`);
   })
