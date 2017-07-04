@@ -19,6 +19,9 @@ function getRequestOptions(path) {
 
 
 function getRepoContributors(repoOwner, repoName, cb) {
+  if (!repoOwner || !repoName) {
+    throw new Error("Please execute this file in form of download_avatar.js <Repository Owner> <Repository Name>");
+  }
 
   request(getRequestOptions(`repos/${repoOwner}/${repoName}/contributors`), function (error, response, body) {
     var data;
