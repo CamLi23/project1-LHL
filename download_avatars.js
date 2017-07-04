@@ -20,25 +20,39 @@ function getRequestOptions(path) {
 
 function getRepoContributors(repoOwner, repoName, cb) {
   request(getRequestOptions(`repos/${repoOwner}/${repoName}/contributors`), function (error, response, body) {
+    var data;
 
     try {
-      const data = JSON.parse(body);
-      const final = [];
+      data = JSON.parse(body);
 
-      cb(data.forEach((contributor) => {
-        final.push(contributor.avatar_url);
-      }));
-      console.log(final);
-      return final;
-
-
-    } catch (err) {
+    } catch (error) {
       console.log('Failed to parse content body');
     }
+
+      cb(data);
+
 
   });
 }
 
+
+/*data.forEach((contributor) => {
+        final.push(contributor.avatar_url);
+      })*/
+
+
+
+function downloadImageByURL(url, filePath) {
+  request.get(url)
+         .on('error', function (err) {
+          throw err;
+         })
+         .on('response', function (res) {
+          const writeStream = fs.createWriteStream(filePath);
+          res.pipe(writeStream);
+
+         });
+}
 
 
 /*request.get(`https://api.github.com/repos/${repoOwner}/${repoName}/contributors`)
@@ -51,7 +65,9 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
 
 
-getRepoContributors("jquery", "jquery", function(err, result) {
-  console.log("Errors:", err);
-  console.log("Result:", result);
+getRepoContributors("jquery", "jquery", function (data) {
+  data.forEach((contributor) => {
+    downloadImageByURL(contributor.avatar_url, `avatars/${contributor.login}.jpg`);
+  })
 });
+// downloadImageByURL("https://avatars2.githubusercontent.com/u/43004?v=3", "avatars/githubUserAv.jpg");
